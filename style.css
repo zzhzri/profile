@@ -1,0 +1,1515 @@
+/*
+  IMD318 Individual Assignment: Personal Website
+  Author: Zulhazri Aiman bin Abdu Raji
+  File: style.css (shared by all six pages)
+
+  Design idea: a dark "night drive" look that ties together my three
+  interests (cars, gaming and music). Dark dashboard colours, one light blue
+  accent like a glowing dashboard light, and a fixed navigation bar on the left
+  side like a car's instrument panel.
+
+  Contents:
+    1. Colour and font variables
+    2. Base and reset
+    3. Accessibility helpers
+    4. Left sidebar and navigation
+    5. Main content area and page headings
+    6. Shared cards and tags
+    7. Home page
+    8. My Story timeline
+    9. Interests page
+   10. Gallery
+   11. Resume page
+   12. Contact page and footer
+   13. Responsive layout (tablet and phone)
+*/
+
+
+/* ===== 1. COLOUR AND FONT VARIABLES ===== */
+:root {
+  --bg: #0e1014;          /* page background, near black */
+  --panel: #161a21;       /* sidebar and cards */
+  --panel-2: #1d222b;     /* card hover, inner boxes */
+  --line: #2a303b;        /* borders */
+  --text: #e9ecf1;        /* main text */
+  --muted: #9aa3b2;       /* secondary text */
+  --accent: #38bdf8;      /* light blue accent, like a glowing dashboard light */
+  --accent-soft: rgba(56, 189, 248, 0.12);
+
+  --font-head: "Chakra Petch", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Inter", "Segoe UI", Arial, sans-serif;
+
+  --sidebar-width: 270px;
+  --radius: 10px;
+}
+
+
+/* ===== 2. BASE AND RESET ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+
+/* ===== 3. ACCESSIBILITY HELPERS ===== */
+/* Skip link stays hidden until a keyboard user tabs onto it */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--accent);
+  color: #111;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Clear outline for keyboard focus on every link */
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Turn off movement and animation for people who ask their system to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* ===== 4. LEFT SIDEBAR AND NAVIGATION ===== */
+/*
+  The sidebar is hidden off the left edge at first. Clicking the Menu button
+  ticks a hidden checkbox (#nav-toggle), and the CSS below slides the sidebar in.
+  This works with HTML and CSS only, no JavaScript.
+*/
+
+/* The real checkbox is hidden from view but can still be reached with the keyboard */
+.nav-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* Menu button, fixed in the top-left corner */
+.menu-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.9rem;
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-head);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.menu-btn:hover {
+  border-color: var(--accent);
+}
+
+/* Show a focus outline on the button when the checkbox has keyboard focus */
+.nav-toggle:focus-visible + .menu-btn {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Three-line "hamburger" icon drawn with CSS */
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--accent);
+  border-radius: 2px;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.menu-icon {
+  position: relative;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menu-icon::before {
+  top: -6px;
+}
+
+.menu-icon::after {
+  top: 6px;
+}
+
+/* The word on the button changes between Menu and Close */
+.menu-close {
+  display: none;
+}
+
+/* Dark layer behind the open sidebar; clicking it closes the menu */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+/* The sidebar itself, starting off screen */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: var(--sidebar-width);
+  max-width: 85%;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 1.5rem 2rem;
+  transform: translateX(-100%);
+  visibility: hidden;  /* hidden links cannot be reached with the Tab key */
+  transition: transform 0.3s ease, visibility 0.3s ease;
+  background-color: var(--panel);
+  border-right: 1px solid var(--line);
+}
+
+.sidebar-photo {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  margin-bottom: 1rem;
+}
+
+.sidebar-name {
+  font-family: var(--font-head);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.sidebar-role {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.35rem 0 2rem;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each link shows a small number, like a gear position */
+.nav-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.25rem;
+  border-left: 3px solid transparent;
+  border-radius: 0 8px 8px 0;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-num {
+  font-size: 0.75rem;
+  color: var(--accent);
+  min-width: 1.4rem;
+}
+
+.nav-list a:hover {
+  color: var(--text);
+  background-color: var(--panel-2);
+}
+
+/* The page that is currently open (set with aria-current="page" in the HTML) */
+.nav-list a[aria-current="page"] {
+  color: var(--text);
+  background-color: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+
+/* Location note pushed to the bottom of the sidebar */
+.sidebar-foot {
+  margin-top: auto;
+  padding-top: 2rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+
+/* ----- When the menu is open (checkbox ticked) ----- */
+.nav-toggle:checked ~ .sidebar {
+  transform: translateX(0);
+  visibility: visible;
+  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.nav-toggle:checked ~ .nav-overlay {
+  display: block;
+}
+
+.nav-toggle:checked + .menu-btn .menu-open {
+  display: none;
+}
+
+.nav-toggle:checked + .menu-btn .menu-close {
+  display: inline;
+}
+
+/* Hamburger turns into an X */
+.nav-toggle:checked + .menu-btn .menu-icon {
+  background-color: transparent;
+}
+
+.nav-toggle:checked + .menu-btn .menu-icon::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle:checked + .menu-btn .menu-icon::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+
+/* ----- Slide out on hover (mouse users only) ----- */
+/* A thin glowing strip on the left edge. Moving the mouse onto it, or onto the
+   sidebar itself, slides the sidebar out. Moving away slides it back in. */
+.edge-trigger {
+  display: none;
+}
+
+@media (hover: hover) {
+  .edge-trigger {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 55;
+    width: 14px;
+    height: 100vh;
+    border-left: 3px solid var(--accent);
+    opacity: 0.6;
+  }
+
+  .edge-trigger:hover ~ .sidebar,
+  .sidebar:hover {
+    transform: translateX(0);
+    visibility: visible;
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  /* On mouse devices the Menu button is hidden, so the edge slide is the only way in.
+     It still appears for keyboard users (when the checkbox has focus) so they can open the menu. */
+  .menu-btn {
+    display: none;
+  }
+
+  .nav-toggle:focus-visible + .menu-btn,
+  .nav-toggle:checked + .menu-btn {
+    display: flex;
+  }
+
+  /* No button at the top, so less space is needed above the content */
+  .main {
+    padding-top: 3.5rem;
+  }
+}
+
+
+/* ===== 5. MAIN CONTENT AREA AND PAGE HEADINGS ===== */
+/* Centred on the page, with space at the top for the Menu button */
+.main {
+  margin: 0 auto;
+  padding: 5rem 4rem 2rem;
+  max-width: 1100px;
+}
+
+/* Small light blue label above each page title */
+.eyebrow {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.page-title {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 640px;
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+
+/* ===== 6. SHARED CARDS AND TAGS ===== */
+.card {
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.card h3 {
+  font-size: 1.2rem;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.tag-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.tag-list li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Tags that are links: the whole pill is clickable and lights up blue */
+.tag-list li a {
+  display: block;
+  margin: -0.2rem -0.8rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tag-list li a:hover,
+.tag-list li a:focus-visible {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background-color: var(--accent);
+  color: #111;
+  font-family: var(--font-head);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* ===== 7. HOME PAGE ===== */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.hero-photo {
+  width: 240px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.hero h1 {
+  font-size: 3.2rem;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* The second line of the name in light blue */
+.hero h1 span {
+  color: var(--accent);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Four quick facts in a row, like gauges on a dashboard */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  list-style: none;
+  margin: 0 0 3rem;
+  padding: 0;
+}
+
+.facts li {
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+}
+
+.fact-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.fact-value {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.card-link {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+/* ===== 8. MY STORY TIMELINE ===== */
+/* A vertical line with a dot for each chapter */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2rem;
+  border-left: 2px solid var(--line);
+}
+
+.timeline li {
+  position: relative;
+  padding-bottom: 2.25rem;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: calc(-2rem - 8px);
+  top: 0.35rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+
+.timeline-date {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.timeline h2 {
+  font-size: 1.35rem;
+  margin-top: 0.2rem;
+}
+
+.timeline p {
+  color: var(--muted);
+  max-width: 680px;
+}
+
+
+/* ===== 9. INTERESTS PAGE ===== */
+/* Each interest is a wide panel: big number on the left, text on the right */
+.interest {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.interest-num {
+  font-family: var(--font-head);
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.interest h2 {
+  font-size: 1.6rem;
+}
+
+.interest-list {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+}
+
+.interest-list li {
+  margin-bottom: 0.35rem;
+}
+
+.interest-list strong {
+  color: var(--text);
+}
+
+/* Game groups on the Gaming card */
+.game-group {
+  margin-top: 1.25rem;
+}
+
+.game-group h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+/* Three game covers per row */
+.game-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Car and bike picks: photos only, two per row (2 x 2) */
+.car-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each photo is a link; the caption sits on the bottom of the photo */
+.car-card {
+  position: relative;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.car-card:hover,
+.car-card:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* object-fit: cover fills the frame with any photo size, trimming the edges if needed */
+.car-card img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.car-card:hover img {
+  transform: scale(1.04);
+}
+
+.car-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem 0.8rem 0.5rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Each game is one clickable card: cover on top, name and note below */
+.game-card {
+  display: block;
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.game-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Steam covers are 460 x 215, so a fixed height keeps every card the same size */
+.game-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.game-name {
+  display: block;
+  padding: 0.7rem 0.85rem 0.15rem;
+  font-family: var(--font-head);
+  font-weight: 700;
+}
+
+.game-note {
+  display: block;
+  padding: 0 0.85rem 0.85rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* A single photo with a caption inside an interest card (used for Gunpla) */
+.interest-figure {
+  margin: 0 0 1rem;
+}
+
+.interest-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.interest-figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Car and bike brands: label on the left, brands on the right, a thin line between rows */
+.brand-list {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.brand-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-row dt {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.brand-row dd {
+  margin: 0;
+  color: var(--text);
+}
+
+/* Each brand links to my pick from that brand */
+.brand-row dd a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+  transition: color 0.2s ease;
+}
+
+.brand-row dd a:hover,
+.brand-row dd a:focus-visible {
+  color: var(--accent);
+}
+
+/* Music genres side by side, each with its own list of artists */
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.genre {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.genre h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+/* Artist links on the Music card: each name is a button-like link */
+.artist-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+}
+
+.artist-list a {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.artist-list a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-soft);
+}
+
+
+/* Music feature: favourites on the left, song on repeat on the right */
+.music-feature {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  align-items: start;
+}
+
+.fav-col {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Each favourite: picture on top, label and name underneath */
+.fav-item {
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.fav-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 25%;  /* keep the top of the photo, where faces usually are */
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+}
+
+.fav-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.fav-name {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.fav-meta {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* The song box sits in the grid, so it no longer needs space above it */
+.music-feature .on-repeat {
+  margin-top: 0;
+}
+
+/* "My song on repeat" box, styled like a music player */
+.on-repeat {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius);
+  background-color: var(--accent-soft);
+  border: 1px solid var(--accent);
+}
+
+.on-repeat-label {
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+/* Screenshot of the song, which is also a link to the song on YouTube */
+.song-shot-link {
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.song-shot-link:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.song-shot {
+  width: 100%;
+  height: auto;
+}
+
+.on-repeat-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.song-title {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.song-artist {
+  color: var(--muted);
+  margin: 0;
+}
+
+.song-link {
+  margin-left: auto;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.song-link:hover {
+  text-decoration: underline;
+}
+
+/* Small bouncing bars, like a sound equaliser */
+.eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+}
+
+.eq span {
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+  background-color: var(--accent);
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.eq span:nth-child(2) { animation-delay: 0.2s; }
+.eq span:nth-child(3) { animation-delay: 0.4s; }
+.eq span:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes bounce {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+/* Progress bar under the song, about halfway through */
+.song-bar {
+  height: 4px;
+  margin-top: 1rem;
+  border-radius: 2px;
+  background-color: var(--line);
+}
+
+.song-bar span {
+  display: block;
+  width: 52%;
+  height: 100%;
+  border-radius: 2px;
+  background-color: var(--accent);
+}
+
+
+/* ----- Places slider (arrows and dots, CSS only) ----- */
+/* Text that only screen readers hear (used inside the arrow and dot labels) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.slider {
+  position: relative;
+}
+
+/* The radio buttons are hidden but can still be reached with Tab and the arrow keys */
+.slide-radio {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* All slides sit on top of each other inside one frame */
+.slides {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 56%;  /* keeps the frame roughly 16:9 at any width */
+  border-radius: var(--radius);
+  overflow: hidden;
+  background-color: var(--panel-2);
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;  /* hidden slides cannot be clicked */
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Show the slide that matches the ticked radio button */
+#place-1:checked ~ .slides .slide:nth-child(1),
+#place-2:checked ~ .slides .slide:nth-child(2),
+#place-3:checked ~ .slides .slide:nth-child(3),
+#place-4:checked ~ .slides .slide:nth-child(4),
+#place-5:checked ~ .slides .slide:nth-child(5),
+#place-6:checked ~ .slides .slide:nth-child(6) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-decoration: none;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption over the bottom of the photo, on a dark fade so the text is readable */
+.slide-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3rem 1.5rem 1.25rem;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+}
+
+.slide-count {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.slide-name {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.slide-note {
+  display: block;
+  font-size: 0.95rem;
+  color: #d5dae3;
+}
+
+/* Round arrow buttons on the left and right of the photo */
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  margin-top: -23px;
+  border-radius: 50%;
+  background-color: rgba(14, 16, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.arrow:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.arrow-prev {
+  left: 1rem;
+}
+
+.arrow-next {
+  right: 1rem;
+}
+
+/* The arrow shape: a small bordered square turned 45 degrees */
+.arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+
+.arrow-prev::before {
+  margin: -6px 0 0 -3px;
+  transform: rotate(-135deg);
+}
+
+.arrow-next::before {
+  margin: -6px 0 0 -8px;
+  transform: rotate(45deg);
+}
+
+/* Dots under the slider; the one for the current place is lit up */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.dots label {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--line);
+  cursor: pointer;
+  transition: background-color 0.2s ease, width 0.2s ease;
+}
+
+.dots label:hover {
+  background-color: var(--muted);
+}
+
+#place-1:checked ~ .dots label:nth-child(1),
+#place-2:checked ~ .dots label:nth-child(2),
+#place-3:checked ~ .dots label:nth-child(3),
+#place-4:checked ~ .dots label:nth-child(4),
+#place-5:checked ~ .dots label:nth-child(5),
+#place-6:checked ~ .dots label:nth-child(6) {
+  width: 26px;
+  border-radius: 5px;
+  background-color: var(--accent);
+}
+
+/* Show a focus ring on the slider when keyboard users move between places */
+.slide-radio:focus-visible ~ .slides {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+
+
+/* ===== 10. GALLERY ===== */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* No border or box: just the photo */
+.gallery-item {
+  margin: 0;
+}
+
+/* Every photo cropped to the same height so the grid stays even */
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.gallery-item figcaption {
+  padding: 0.6rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+
+/* ===== 11. RESUME PAGE ===== */
+.resume-block {
+  margin-bottom: 2.5rem;
+}
+
+.resume-block > h2 {
+  font-size: 1.4rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.25rem;
+}
+
+.entry {
+  margin-bottom: 1.5rem;
+}
+
+/* Title on the left, dates on the right */
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.entry-head h3 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.entry-date {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin: 0;
+}
+
+.entry-org {
+  color: var(--muted);
+  margin: 0.2rem 0 0.75rem;
+}
+
+.entry ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.entry li {
+  margin-bottom: 0.35rem;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.card-meta {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+
+/* ===== 12. CONTACT PAGE AND FOOTER ===== */
+/* Browsers italicise <address> by default, so reset it */
+.contact-list {
+  font-style: normal;
+  display: grid;
+  gap: 1rem;
+  max-width: 560px;
+}
+
+.contact-list a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 1.4rem;
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.contact-list a:hover {
+  border-color: var(--accent);
+}
+
+.contact-type {
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.site-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.site-footer p {
+  margin: 0.2rem 0;
+}
+
+.site-footer a {
+  color: var(--muted);
+}
+
+
+/* ===== 13. RESPONSIVE LAYOUT ===== */
+/* Tablet: fewer columns */
+@media (max-width: 1100px) {
+  .main {
+    padding: 3rem 2.5rem 2rem;
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .genre-grid,
+  .game-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .music-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .fav-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Phone: smaller padding; the menu works the same as on a laptop */
+@media (max-width: 860px) {
+  .main {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .hero-photo {
+    width: 100%;
+    max-width: 320px;
+    height: 340px;
+  }
+
+  .hero h1,
+  .page-title {
+    font-size: 2.2rem;
+  }
+
+  .two-col,
+  .facts {
+    grid-template-columns: 1fr;
+  }
+
+  .interest {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .genre-grid,
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .car-card img {
+    height: 130px;
+  }
+
+  /* Gallery stays 3 x 3 on phones, with smaller square-ish photos */
+  .gallery {
+    gap: 0.9rem 0.4rem;  /* more space between rows so captions don't touch the next photo */
+  }
+
+  .gallery-item img {
+    height: 115px;
+    border-radius: 6px;
+  }
+
+  .gallery-item figcaption {
+    padding-top: 0.3rem;
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  .fav-col {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .slides {
+    padding-bottom: 75%;  /* a taller frame on phones so the caption fits */
+  }
+
+  .arrow {
+    width: 38px;
+    height: 38px;
+    margin-top: -19px;
+  }
+
+  .arrow-prev {
+    left: 0.5rem;
+  }
+
+  .arrow-next {
+    right: 0.5rem;
+  }
+
+  .slide-name {
+    font-size: 1.2rem;
+  }
+
+  .slide-note {
+    font-size: 0.85rem;
+  }
+
+  .interest-num {
+    font-size: 2.5rem;
+  }
+}

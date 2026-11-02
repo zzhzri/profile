@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal website of Zulhazri Aiman bin Abdu Raji, a Diploma in Information Management student from Kota Kinabalu, Sabah.">
+  <title>Zulhazri Aiman bin Abdu Raji</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Shared stylesheet for all pages -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="top">
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <label for="nav-toggle" class="menu-btn">
+    <span class="menu-icon" aria-hidden="true"></span>
+    <span class="menu-open">Menu</span>
+    <span class="menu-close">Close</span>
+  </label>
+  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
+  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
+  <div class="edge-trigger" aria-hidden="true"></div>
+
+  <!-- Left sidebar with navigation (same on every page) -->
+  <header class="sidebar">
+    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
+    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
+    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+          <li><a href="index.html" aria-current="page"><span class="nav-num">01</span>Home</a></li>
+          <li><a href="story.html"><span class="nav-num">02</span>My Story</a></li>
+          <li><a href="interests.html"><span class="nav-num">03</span>Interests</a></li>
+          <li><a href="gallery.html"><span class="nav-num">04</span>Gallery</a></li>
+          <li><a href="resume.html"><span class="nav-num">05</span>Resume</a></li>
+          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main id="main" class="main">
+
+    <!-- Hero: photo, name and introduction -->
+    <section class="hero" aria-labelledby="name-heading">
+      <img class="hero-photo" src="zulhazri.jpg" alt="Zulhazri Aiman taking a mirror selfie in a black knit polo" width="240" height="300">
+      <div>
+        <p class="eyebrow">Hi, I'm</p>
+        <h1 id="name-heading">Zulhazri <span>Aiman</span></h1>
+        <p class="lead">A 20 years old from Kota Kinabalu, Sabah. Student of Information Management at UiTM. I build websites for fun and outside class you will find me around cars, games and music.</p>
+        <p class="hero-actions">
+          <a class="btn" href="story.html">Read my story</a>
+          <a class="btn btn-ghost" href="interests.html">What I'm into</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Quick facts -->
+    <section aria-labelledby="facts-heading">
+      <h2 id="facts-heading" class="eyebrow">Quick facts</h2>
+      <ul class="facts">
+        <li><span class="fact-label">From</span><span class="fact-value">Kota Kinabalu, Sabah</span></li>
+        <li><span class="fact-label">Studying</span><span class="fact-value">Diploma in Information Management</span></li>
+        <li><span class="fact-label">Into</span><span class="fact-value">Cars, gaming, music</span></li>
+        <li><span class="fact-label">Next stop</span><span class="fact-value">Degree, September 2027</span></li>
+      </ul>
+    </section>
+
+    <!-- About me -->
+    <section aria-labelledby="about-heading">
+      <h2 id="about-heading" class="section-title">About me</h2>
+      <p>My friends would describe me as reliable, easy to work with and always ready to help and usually the one making them laugh too. I'm comfortable working on my own, but I enjoy working in a team just as much.</p>
+      <p>I like understanding how things work whether it is an engine, a game or a website. That is probably why I enjoy watching people fix cars as much as I enjoy fixing my own code.</p>
+    </section>
+
+    <!-- Links to the main pages -->
+    <section aria-labelledby="explore-heading">
+      <h2 id="explore-heading" class="section-title">Take a look around</h2>
+      <div class="three-col">
+        <article class="card">
+          <h3>My Story</h3>
+          <p>How a fourth-choice course turned into something I actually enjoy.</p>
+          <a class="card-link" href="story.html">Read more</a>
+        </article>
+        <article class="card">
+          <h3>Interests</h3>
+          <p>Cars, gaming and the music on repeat in my headphones.</p>
+          <a class="card-link" href="interests.html">Read more</a>
+        </article>
+        <article class="card">
+          <h3>Resume</h3>
+          <p>My education, internship, projects and skills in one place.</p>
+          <a class="card-link" href="resume.html">Read more</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
+      <p><a href="#top">Back to top</a></p>
+    </footer>
+  </main>
+</body>
+</html>

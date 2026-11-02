@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Photos from Zulhazri Aiman bin Abdu Raji.">
+  <title>Gallery | Zulhazri Aiman bin Abdu Raji</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Shared stylesheet for all pages -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="top">
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <label for="nav-toggle" class="menu-btn">
+    <span class="menu-icon" aria-hidden="true"></span>
+    <span class="menu-open">Menu</span>
+    <span class="menu-close">Close</span>
+  </label>
+  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
+  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
+  <div class="edge-trigger" aria-hidden="true"></div>
+
+  <!-- Left sidebar with navigation (same on every page) -->
+  <header class="sidebar">
+    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
+    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
+    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+          <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
+          <li><a href="story.html"><span class="nav-num">02</span>My Story</a></li>
+          <li><a href="interests.html"><span class="nav-num">03</span>Interests</a></li>
+          <li><a href="gallery.html" aria-current="page"><span class="nav-num">04</span>Gallery</a></li>
+          <li><a href="resume.html"><span class="nav-num">05</span>Resume</a></li>
+          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main id="main" class="main">
+
+    <!-- Page heading -->
+    <p class="eyebrow">04 / Gallery</p>
+    <h1 class="page-title">Snapshots</h1>
+    <p class="lead">A few moments from my life wich my amazing friends.</p>
+
+    <!-- Photo grid: nine photos, three per row, no borders. Each photo has a short description under it -->
+    <div class="gallery">
+      <figure class="gallery-item">
+        <img src="gallery1.jpg" alt="[Describe photo 1]" width="800" height="600" loading="lazy">
+        <figcaption>After class activity</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery2.jpg" alt="[Describe photo 2]" width="800" height="600" loading="lazy">
+        <figcaption>Overall champion during camping</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery3.jpg" alt="[Describe photo 3]" width="800" height="600" loading="lazy">
+        <figcaption>Last day of school</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery4.jpg" alt="[Describe photo 4]" width="800" height="600" loading="lazy">
+        <figcaption>Outdoor activity</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery5.jpg" alt="[Describe photo 5]" width="800" height="600" loading="lazy">
+        <figcaption>After semester 1 final exam</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery6.jpg" alt="[Describe photo 6]" width="800" height="600" loading="lazy">
+        <figcaption>Eid 2025</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery7.jpg" alt="[Describe photo 7]" width="800" height="600" loading="lazy">
+        <figcaption>Going to event at parking B</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery8.jpg" alt="[Describe photo 8]" width="800" height="600" loading="lazy">
+        <figcaption>During appreciation ceremony semester 2</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="gallery9.jpg" alt="[Describe photo 9]" width="800" height="600" loading="lazy">
+        <figcaption>Quick matcha</figcaption>
+      </figure>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
+      <p><a href="#top">Back to top</a></p>
+    </footer>
+  </main>
+</body>
+</html>

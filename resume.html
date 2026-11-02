@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Education, experience, projects and skills of Zulhazri Aiman bin Abdu Raji.">
+  <title>Resume | Zulhazri Aiman bin Abdu Raji</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Shared stylesheet for all pages -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="top">
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Menu button: ticking the hidden checkbox opens the sidebar (CSS only) -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <label for="nav-toggle" class="menu-btn">
+    <span class="menu-icon" aria-hidden="true"></span>
+    <span class="menu-open">Menu</span>
+    <span class="menu-close">Close</span>
+  </label>
+  <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
+  <!-- Thin strip on the left edge: moving the mouse onto it slides the sidebar out -->
+  <div class="edge-trigger" aria-hidden="true"></div>
+
+  <!-- Left sidebar with navigation (same on every page) -->
+  <header class="sidebar">
+    <img class="sidebar-photo" src="zulhazri-face.jpg" alt="" width="96" height="96">
+    <a class="sidebar-name" href="index.html">ZULHAZRI AIMAN</a>
+    <p class="sidebar-role">Kota Kinabalu, Sabah</p>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+          <li><a href="index.html"><span class="nav-num">01</span>Home</a></li>
+          <li><a href="story.html"><span class="nav-num">02</span>My Story</a></li>
+          <li><a href="interests.html"><span class="nav-num">03</span>Interests</a></li>
+          <li><a href="gallery.html"><span class="nav-num">04</span>Gallery</a></li>
+          <li><a href="resume.html" aria-current="page"><span class="nav-num">05</span>Resume</a></li>
+          <li><a href="contact.html"><span class="nav-num">06</span>Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main id="main" class="main">
+
+    <!-- Page heading -->
+    <p class="eyebrow">05 / Resume</p>
+    <h1 class="page-title">Resume</h1>
+    <p class="lead">My education, experience, projects and skills.</p>
+
+    <!-- Education -->
+    <section class="resume-block" aria-labelledby="edu-heading">
+      <h2 id="edu-heading">Education</h2>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Diploma in Information Management</h3>
+          <p class="entry-date">Sep 2024 &ndash; Mar 2027</p>
+        </div>
+        <p class="entry-org">Universiti Teknologi MARA (UiTM), Kampus Samarahan 1, Sarawak &middot; CGPA 3.44 (as of Part 4)</p>
+        <ul class="tag-list">
+          <li>Introduction to Cataloging</li>
+          <li>Metadata Development</li>
+          <li>Database for Business Information Professionals</li>
+          <li>Electronic Recordkeeping</li>
+          <li>Electronic Publishing</li>
+          <li>Foundation of Archives Administration</li>
+          <li>Industrial Training</li>
+        </ul>
+      </article>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Sijil Pelajaran Malaysia (SPM)</h3>
+          <p class="entry-date">2019 &ndash; 2023</p>
+        </div>
+        <p class="entry-org">Sekolah Menengah Kebangsaan Kinarut, Papar, Sabah</p>
+      </article>
+    </section>
+
+    <!-- Work experience -->
+    <section class="resume-block" aria-labelledby="exp-heading">
+      <h2 id="exp-heading">Experience</h2>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Industrial Trainee, Security &amp; Intelligence Department</h3>
+          <p class="entry-date">28 Jul &ndash; 18 Sep 2026</p>
+        </div>
+        <p class="entry-org">Sabah Electricity Sdn. Bhd. (SESB), Kota Kinabalu</p>
+        <ul>
+          <li>Processed staff and intern access card applications, from checking forms to printing cards.</li>
+          <li>Proposed moving the paper access card application online, then built a working PHP and MySQL prototype.</li>
+          <li>Built a CCTV fault reporting system so faulty cameras can be reported, tracked and fixed.</li>
+          <li>Monitored building CCTV, exported and organised footage, and joined site visits to replace equipment.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- Projects -->
+    <section class="resume-block" aria-labelledby="proj-heading">
+      <h2 id="proj-heading">Projects</h2>
+      <div class="two-col">
+        <article class="card">
+          <p class="card-meta">PHP &middot; MySQL &middot; Internship</p>
+          <h3>CCTV Fault Complaint System</h3>
+          <p>A public form for reporting faulty cameras, with duplicate-report detection, a job list for technicians and a monthly repair report.</p>
+        </article>
+        <article class="card">
+          <p class="card-meta">PHP &middot; MySQL &middot; Internship</p>
+          <h3>Access Card Application System</h3>
+          <p>Replaces a paper form with an online application, a two-stage approval flow and a tracked history for every card.</p>
+        </article>
+        <article class="card">
+          <p class="card-meta">PHP &middot; MySQL &middot; Personal</p>
+          <h3>Student Management System</h3>
+          <p>A system for student records with a multi-step registration form, login and a password reset by one-time code.</p>
+        </article>
+        <article class="card">
+          <p class="card-meta">MySQL &middot; Group project, IMD261</p>
+          <h3>Gaming Console Hub Database</h3>
+          <p>Database design for a console rental business: ER diagram, data dictionary and implementation in phpMyAdmin.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="resume-block" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills</h2>
+      <div class="two-col">
+        <div>
+          <h3>Information management</h3>
+          <ul class="tag-list">
+            <li>Cataloguing (ISBD, MARC 21)</li>
+            <li>Metadata (Dublin Core)</li>
+            <li>Electronic records management</li>
+            <li>Document checking</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Web and tools</h3>
+          <ul class="tag-list">
+            <li>HTML and CSS</li>
+            <li>PHP</li>
+            <li>MySQL</li>
+            <li>Git and GitHub</li>
+            <li>C++ (basic)</li>
+            <li>Word and Excel</li>
+            <li>Canva</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Zulhazri Aiman bin Abdu Raji. Built with HTML and CSS, hosted on GitHub Pages.</p>
+      <p><a href="#top">Back to top</a></p>
+    </footer>
+  </main>
+</body>
+</html>
